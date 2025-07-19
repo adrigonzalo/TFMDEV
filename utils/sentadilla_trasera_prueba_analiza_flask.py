@@ -144,13 +144,13 @@ class SquatDetector:
 
                 landmarks = results.pose_landmarks.landmark
 
-                # --- Obtener coordenadas de los landmarks relevantes ---
+                # Obtener coordenadas de los landmarks relevantes
                 shoulder_left = [landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].x, landmarks[mp_pose.PoseLandmark.LEFT_SHOULDER.value].y]
                 hip_left = [landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].x, landmarks[mp_pose.PoseLandmark.LEFT_HIP.value].y]
                 knee_left = [landmarks[mp_pose.PoseLandmark.LEFT_KNEE.value].x, landmarks[mp_pose.PoseLandmark.LEFT_KNEE.value].y]
                 ankle_left = [landmarks[mp_pose.PoseLandmark.LEFT_ANKLE.value].x, landmarks[mp_pose.PoseLandmark.LEFT_ANKLE.value].y]
 
-                # --- Calcular los angulos de interes (rodilla, cadera, espalda) ---
+                # Calcular los angulos de interes (rodilla, cadera, espalda)
                 knee_angle = calculate_angle(hip_left, knee_left, ankle_left)
                 hip_angle = calculate_angle(shoulder_left, hip_left, knee_left)
                 back_angle = calculate_angle(shoulder_left, hip_left, ankle_left)

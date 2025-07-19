@@ -20,7 +20,7 @@ from model_3 import entrenar_y_evaluar_modelo
 
 app = Flask(__name__)
 
-# --- CONFIGURACIÓN GLOBAL ---
+# CONFIGURACIÓN GLOBAL
 cap = None
 current_detector = None
 output_frame = None
@@ -59,7 +59,7 @@ PDF_SAVE_DIR = "feedback_pdfs"
 os.makedirs(PDF_SAVE_DIR, exist_ok=True)
 
 
-# --- FUNCIONES DE PROCESAMIENTO DE VIDEO EN VIVO ---
+# FUNCIONES DE PROCESAMIENTO DE VIDEO EN VIVO
 def start_video_processing(detector_key, camera_id=0): 
     global cap, current_detector, processing_active, output_frame, latest_exercise_data, pose_detection_paused
 
@@ -265,7 +265,7 @@ def get_next_feedback_filename():
             return filename 
         i += 1 
 
-# --- RUTAS DE FLASK ---
+# RUTAS DE FLASK
 
 @app.route('/')
 def index():

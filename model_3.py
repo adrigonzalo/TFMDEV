@@ -20,7 +20,7 @@ from sklearn.metrics import (
 )
 import pickle
 
-# --- FUNCIoN: ENTRENAR Y EVALUAR UN MODELO ---
+# FUNCION: ENTRENAR Y EVALUAR UN MODELO
 def entrenar_y_evaluar_modelo(csv_filename, model_output_filename):
     """
     Carga los datos de un CSV, entrena varios modelos de clasificacion, los evalua,
@@ -132,7 +132,7 @@ def entrenar_y_evaluar_modelo(csv_filename, model_output_filename):
     print(f"\n¡exito! El mejor modelo para '{csv_filename}' es '{best_model_name}' con una exactitud de {best_accuracy:.4f}.")
     print(f"Modelo guardado como '{model_output_filename}'.")
 
-    # --- CALCULAR Y PREPARAR DATOS PARA EL FRONEND ---
+    # CALCULAR Y PREPARAR DATOS PARA EL FRONEND 
     y_pred = best_model.predict(X_test)
     labels = sorted(y.unique()) # Asegura un orden consistente para las etiquetas
 

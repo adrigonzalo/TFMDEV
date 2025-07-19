@@ -31,24 +31,24 @@ class PushupDetector:
 
     def __init__(self, csv_file_path='coords_flexiones.csv'):
 
-        # --- Configuracion de MediaPipe Pose ---
+        # Configuracion de MediaPipe Pose
         self.pose_model = mp_pose.Pose(min_detection_confidence=0.5, min_tracking_confidence=0.5)
 
-        # --- Variables de estado para la deteccion de flexiones ---
+        # Variables de estado para la deteccion de flexiones
         self.counter_correct = 0 # Contador de repeticiones CORRECTAS
         self.counter_incorrect = 0 # Contador de repeticiones INCORRECTAS
         self.stage = None # 'down' o 'up' para el estado de la flexion
         self.current_export_label = 'neutral' # Etiqueta para el CSV (neutral, down, up, correct_finish, incorrect_finish)
         self.hip_angle_at_down_stage = None # Nueva variable para almacenar el ángulo de la cadera al alcanzar la posición "down"
 
-        # --- Umbrales del ejercicio (ajustables) ---
+        # Umbrales del ejercicio (ajustables)
         self.elbow_threshold_down = 100 # angulo del codo para considerar la posicion "abajo" 
         self.elbow_threshold_up = 160  # angulo del codo para considerar la posicion "arriba"
         # Umbral para la cadera. Un ángulo *menor* a este indica una cadera "caída" (postura incorrecta).
         # Por ejemplo, si una cadera recta es 170-180, un valor de 160 podría ser un buen umbral.
         self.incorrect_hip_angle_threshold = 160
 
-        # --- Configuracion CSV ---
+        # Configuracion CSV
         self.csv_file_path = csv_file_path
         self.csv_headers = ['class']
         for val in range(1, 33 + 1):
@@ -195,7 +195,7 @@ class PushupDetector:
             # Exportar el estado del frame actual al CSV
             self._export_landmark(results, self.current_export_label)
 
-            # --- Visualizacion de angulos y contadores en la imagen ---
+            # Visualizacion de angulos y contadores en la imagen
             img_h, img_w, _ = image.shape
             scale_x = img_w
             scale_y = img_h

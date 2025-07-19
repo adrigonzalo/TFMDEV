@@ -170,7 +170,7 @@ class DeadliftDetector:
 
 
 
-                # --- Logica para el contador de repeticiones de peso muerto y exportacion de landmarks ---
+                # Logica para el contador de repeticiones de peso muerto y exportacion de landmarks
                 
                 # Estado INITIAL: Persona de pie, lista para empezar la bajada
                 if self.stage == "initial":
@@ -281,7 +281,7 @@ class DeadliftDetector:
                     self.current_action_for_export = None # No exportar si no estamos en una fase de repetición activa
 
 
-                # --- Visualizar los angulos en la imagen ---
+                # Visualizar los angulos en la imagen
                 cv2.putText(image, f"L-Hip: {int(left_hip_angle)}",
                                 tuple(np.multiply(left_hip, [image.shape[1], image.shape[0]]).astype(int)),
                                 cv2.FONT_HERSHEY_SIMPLEX, 0.5, (255, 255, 255), 2, cv2.LINE_AA)

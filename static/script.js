@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // --- Lógica para obtener datos de ejercicio (polling) de Live Detection ---
+    // Lógica para obtener datos de ejercicio (polling) de Live Detection
     let livePollingIntervalId = null;
 
     function startLivePollingExerciseData() {
@@ -315,7 +315,7 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
 
-    // --- FUNCIONES PARA RENDERIZAR LOS GRÁFICOS CON CHART.JS ---
+    // FUNCIONES PARA RENDERIZAR LOS GRÁFICOS CON CHART.JS
 
     function destroyAllCharts() {
 
@@ -712,7 +712,7 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById('classification-report-panel').style.display = 'flex'; // Mostrar la tabla
     }
 
-    // --- MANEJO DE EVENTOS ---
+    // MANEJO DE EVENTOS
 
     // Maneja los clics en los enlaces de navegación
     navLinks.forEach(link => {
@@ -934,7 +934,7 @@ document.addEventListener('DOMContentLoaded', () => {
         console.warn("El botón #live-stop-detection no fue encontrado. Asegúrate de añadirlo a tu HTML.");
     }
      
-    // --- Lógica para los botones de análisis ---
+    // Lógica para los botones de análisis
     const analysisMenuButtons = document.querySelectorAll('#analysis-content .menu-button');
     analysisMenuButtons.forEach(button => {
 
@@ -1140,7 +1140,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
 
-    // --- Lógica del Carrusel de Imágenes en la Sección de Inicio ---
+    // Lógica del Carrusel de Imágenes en la Sección de Inicio
     const heroImages = document.querySelectorAll('.hero-image');
     let currentImageIndex = 0;
     const carouselIntervalTime = 5000; // Cambia la imagen cada 5 segundos (5000 ms)
@@ -1188,7 +1188,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     } // Fin de la logica
 
-    // --- Lógica para el botón de Pantalla Completa ---
+    // Lógica para el botón de Pantalla Completa
     const fullscreenButton = document.querySelector('.video-controls-right .fa-expand').closest('button');
     const videoContainer = document.querySelector('.video-container'); 
 
