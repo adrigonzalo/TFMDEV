@@ -1,0 +1,224 @@
+/* Importar variables globales de style.css */
+@import url('style.css');
+
+/* Estilos generales para el formulario */
+.form-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh; /* Asegura que ocupe toda la altura de la ventana */
+    background-color: var(--background-light); /* Fondo claro por defecto */
+    color: var(--text-dark); /* Texto oscuro por defecto */
+}
+
+
+
+.form-main-content {
+    margin-left: 0;
+    width: 100%;
+    max-width: 900px; /* Ancho máximo para el contenido del formulario */
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+.form-section {
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 30px;
+    margin-top: 20px; /* Espacio debajo del header */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centrar el contenido del formulario */
+}
+
+
+
+.form-section h2 {
+    color: var(--primary-color);
+    margin-bottom: 15px;
+    text-align: center;
+    font-size: 1.8em;
+}
+
+.form-section p {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #555;
+}
+
+
+
+.feedback-form {
+    width: 100%;
+    max-width: 700px; /* Ancho máximo para el formulario en sí */
+}
+
+.form-group {
+    margin-bottom: 25px;
+    background-color: var(--background-light);
+    padding: 20px;
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+}
+
+
+
+.form-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+
+
+.form-group .required {
+    color: var(--alert-color); /* Color para indicar que es obligatorio */
+    margin-left: 5px;
+}
+
+.radio-group {
+    display: flex;
+    flex-direction: column; /* Coloca las opciones de radio en columna */
+    gap: 10px;
+}
+
+.radio-group input[type="radio"] {
+    margin-right: 8px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 18px;
+    border: 2px solid var(--primary-color);
+    border-radius: 50%;
+    outline: none;
+    cursor: pointer;
+    position: relative;
+    top: 3px; /* Alinea verticalmente con el texto */
+    vertical-align: middle;
+}
+
+.radio-group input[type="radio"]:checked {
+    background-color: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.radio-group input[type="radio"]:checked::before {
+    content: '';
+    display: block;
+    width: 8px;
+    height: 8px;
+    background-color: white;
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.radio-group label {
+    font-weight: normal; 
+    display: inline-block; /* Para que la etiqueta esté al lado del radio */
+    cursor: pointer;
+}
+
+textarea {
+    width: 100%;
+    padding: 12px 15px;
+    border: 1px solid #ccc;
+    border-radius: var(--border-radius);
+    font-size: 1em;
+    resize: vertical; /* Permite redimensionar verticalmente */
+    min-height: 80px; /* Altura mínima para textareas */
+    box-sizing: border-box; /* Incluye padding y borde en el ancho/alto */
+    background-color: white;
+    color: var(--text-dark);
+}
+
+
+
+textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 2px rgba(52, 152, 219, 0.3);
+}
+
+.detail-input {
+    display: none; /* Oculto por defecto */
+    margin-top: 15px;
+}
+
+/* Estilo del botón de enviar */
+.btn-primary {
+    display: block;
+    width: 100%;
+    padding: 15px 20px;
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: var(--border-radius);
+    font-size: 1.1em;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background-color var(--transition-speed), transform var(--transition-speed);
+    margin-top: 30px;
+}
+
+.btn-primary:hover {
+    background-color: #2980b9;
+    transform: translateY(-2px);
+}
+
+/* Mensajes del formulario (éxito/error) */
+.form-message {
+    margin-top: 20px;
+    padding: 15px;
+    border-radius: var(--border-radius);
+    text-align: center;
+    font-weight: 600;
+    display: none; /* Oculto por defecto */
+}
+
+.form-message.success {
+    background-color: rgba(46, 204, 113, 0.1);
+    color: var(--secondary-color);
+    border: 1px solid var(--secondary-color);
+}
+
+.form-message.error {
+    background-color: rgba(231, 76, 60, 0.1);
+    color: var(--alert-color);
+    border: 1px solid var(--alert-color);
+}
+
+/* Adaptación para dispositivos móviles */
+@media (max-width: 768px) {
+    .form-section {
+        padding: 20px;
+        margin-top: 10px;
+    }
+
+    .form-section h2 {
+        font-size: 1.5em;
+    }
+
+    .form-group {
+        padding: 15px;
+    }
+
+    .radio-group {
+        gap: 8px;
+    }
+
+    .radio-group label {
+        font-size: 0.95em;
+    }
+
+    .btn-primary {
+        padding: 12px 15px;
+        font-size: 1em;
+    }
+}

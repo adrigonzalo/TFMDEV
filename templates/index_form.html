@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario de Feedback - PoseDetect</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_form.css') }}">
+</head>
+<body> 
+    <div class="container form-container">
+        <main class="main-content form-main-content">
+            <header class="header">
+                <div class="header-actions">
+                    <button class="header-btn tooltip" id="back-to-home">
+                        <i class="fas fa-arrow-left"></i>
+                        <span class="tooltip-text">Volver al Inicio</span>
+                    </button>
+                </div>
+            </header>
+            
+            <section class="form-section content-section active" id="feedback-form-section">
+                <h2>Formulario de Feedback</h2>
+                <p>Tu opinión nos ayuda a mejorar. Por favor, tómate un momento para compartir tu experiencia con la herramienta.</p>
+                
+                <form id="feedback-form" class="feedback-form">
+                    <div class="form-group">
+                        <label for="q1">1. ¿Fue sencillo comenzar a usar la web? <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <input type="radio" id="q1_muy_facil" name="q1" value="Muy fácil" required>
+                            <label for="q1_muy_facil">Muy fácil</label>
+                            <input type="radio" id="q1_facil" name="q1" value="Fácil">
+                            <label for="q1_facil">Fácil</label>
+                            <input type="radio" id="q1_nifacil_nidificil" name="q1" value="Ni fácil ni difícil">
+                            <label for="q1_nifacil_nidificil">Ni fácil ni difícil</label>
+                            <input type="radio" id="q1_dificil" name="q1" value="Difícil">
+                            <label for="q1_dificil">Difícil</label>
+                            <input type="radio" id="q1_muy_dificil" name="q1" value="Muy difícil">
+                            <label for="q1_muy_dificil">Muy difícil</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="q2">2. ¿La pantalla y los menús de la aplicación son claros y fáciles de entender? <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <input type="radio" id="q2_si_totalmente" name="q2" value="Sí, totalmente" required>
+                            <label for="q2_si_totalmente">Sí, totalmente</label>
+                            <input type="radio" id="q2_si" name="q2" value="Sí">
+                            <label for="q2_si">Sí</label>
+                            <input type="radio" id="q2_nisi_nino" name="q2" value="Ni sí ni no">
+                            <label for="q2_nisi_nino">Ni sí ni no</label>
+                            <input type="radio" id="q2_no" name="q2" value="No">
+                            <label for="q2_no">No</label>
+                            <input type="radio" id="q2_no_absoluto" name="q2" value="No, en absoluto">
+                            <label for="q2_no_absoluto">No, en absoluto</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="q3">3. ¿Tuviste algún problema técnico importante mientras lo utilizabas? <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <input type="radio" id="q3_si" name="q3" value="Sí" required>
+                            <label for="q3_si">Sí (Por favor, detalla cuál)</label>
+                            <input type="radio" id="q3_no" name="q3" value="No">
+                            <label for="q3_no">No</label>
+                        </div>
+                        <textarea id="q3_details" name="q3_details" placeholder="Detalla el problema técnico aquí..." class="detail-input"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="q4">4. ¿Crees que cualquier persona, independientemente de su familiaridad con la tecnología, podría manejar este sistema sin problemas? <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <input type="radio" id="q4_si" name="q4" value="Sí" required>
+                            <label for="q4_si">Sí</label>
+                            <input type="radio" id="q4_no" name="q4" value="No">
+                            <label for="q4_no">No</label>
+                            <input type="radio" id="q4_mas_o_menos" name="q4" value="Más o menos">
+                            <label for="q4_mas_o_menos">Más o menos</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="q5">5. ¿Hay algo que, al modificarlo, haría que el dispositivo fuera aún más sencillo de usar? <span class="required">*</span></label>
+                        <textarea id="q5" name="q5" rows="4" placeholder="Comparte tus ideas aquí..." required></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="q6">6. ¿La información sobre tus posturas fue correcta? <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <input type="radio" id="q6_si_totalmente" name="q6" value="Sí, totalmente" required>
+                            <label for="q6_si_totalmente">Sí, totalmente</label>
+                            <input type="radio" id="q6_si" name="q6" value="Sí">
+                            <label for="q6_si">Sí</label>
+                            <input type="radio" id="q6_nisi_nino" name="q6" value="Ni sí ni no">
+                            <label for="q6_nisi_nino">Ni sí ni no</label>
+                            <input type="radio" id="q6_no" name="q6" value="No">
+                            <label for="q6_no">No</label>
+                            <input type="radio" id="q6_no_absoluto" name="q6" value="No, en absoluto">
+                            <label for="q6_no_absoluto">No, en absoluto</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="q7">7. ¿Cuánto te ayudó la información de la herramienta a detectar tus errores al ejecutar los movimientos? <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <input type="radio" id="q7_muchisimo" name="q7" value="Me ayudó muchísimo" required>
+                            <label for="q7_muchisimo">Me ayudó muchísimo</label>
+                            <input type="radio" id="q7_bastante" name="q7" value="Me ayudó bastante">
+                            <label for="q7_bastante">Me ayudó bastante</label>
+                            <input type="radio" id="q7_nino_niperjudico" name="q7" value="No me ayudó ni me perjudicó">
+                            <label for="q7_nino_niperjudico">No me ayudó ni me perjudicó</label>
+                            <input type="radio" id="q7_muy_poco" name="q7" value="Me ayudó muy poco">
+                            <label for="q7_muy_poco">Me ayudó muy poco</label>
+                            <input type="radio" id="q7_nada" name="q7" value="No me ayudó para nada">
+                            <label for="q7_nada">No me ayudó para nada</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="q8">8. ¿Hubo algún momento en que sentiste que lo que se te indicaba sobre tu postura no era acertado? <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <input type="radio" id="q8_si" name="q8" value="Sí" required>
+                            <label for="q8_si">Sí (Por favor, especifica el ejercicio y el tipo de error)</label>
+                            <input type="radio" id="q8_no" name="q8" value="No">
+                            <label for="q8_no">No</label>
+                        </div>
+                        <textarea id="q8_details" name="q8_details" placeholder="Especifica el ejercicio y el tipo de error aquí..." class="detail-input"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="q9">9. ¿La aplicación contribuyó a mejorar tus posturas mientras te ejercitabas? <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <input type="radio" id="q9_significativamente" name="q9" value="Sí, de forma significativa" required>
+                            <label for="q9_significativamente">Sí, de forma significativa</label>
+                            <input type="radio" id="q9_un_poco" name="q9" value="Sí, un poco">
+                            <label for="q9_un_poco">Sí, un poco</label>
+                            <input type="radio" id="q9_no_seguro" name="q9" value="No estoy seguro/a">
+                            <label for="q9_no_seguro">No estoy seguro/a</label>
+                            <input type="radio" id="q9_apenas" name="q9" value="No, apenas">
+                            <label for="q9_apenas">No, apenas</label>
+                            <input type="radio" id="q9_absoluto" name="q9" value="No, en absoluto">
+                            <label for="q9_absoluto">No, en absoluto</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="q10">10. ¿Recomendarías esta web a otras personas interesadas en optimizar su técnica y postura al hacer ejercicio? <span class="required">*</span></label>
+                        <div class="radio-group">
+                            <input type="radio" id="q10_si_duda" name="q10" value="Sí, sin duda" required>
+                            <label for="q10_si_duda">Sí, sin duda</label>
+                            <input type="radio" id="q10_probablemente_si" name="q10" value="Probablemente sí">
+                            <label for="q10_probablemente_si">Probablemente sí</label>
+                            <input type="radio" id="q10_no_seguro" name="q10" value="No estoy seguro/a">
+                            <label for="q10_no_seguro">No estoy seguro/a</label>
+                            <input type="radio" id="q10_probablemente_no" name="q10" value="Probablemente no">
+                            <label for="q10_probablemente_no">Probablemente no</label>
+                            <input type="radio" id="q10_definitivamente_no" name="q10" value="No, definitivamente no">
+                            <label for="q10_definitivamente_no">No, definitivamente no</label>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="q11">11. ¿Tienes algún otro comentario o sugerencia? <span class="required">*</span></label>
+                        <textarea id="q11" name="q11" rows="6" placeholder="Aquí puedes escribir lo que desees..." required></textarea>
+                    </div>
+
+                    <button type="submit" class="btn-primary">Enviar Feedback</button>
+                    <div id="form-message" class="form-message"></div>
+                </form>
+            </section>
+        </main>
+    </div>
+    <script src="{{ url_for('static', filename='script_form.js') }}"></script>
+</body>
+</html>

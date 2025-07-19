@@ -1,0 +1,1260 @@
+/* Variables globales */
+:root {
+    --primary-color: #3498db;
+    --secondary-color: #2ecc71;
+    --alert-color: #e74c3c;
+    --background-light: #f5f5f5;
+    --background-dark: #2c3e50;
+    --text-light: #ecf0f1;
+    --text-dark: #2c3e50;
+    --sidebar-width: 280px;
+    --header-height: 60px;
+    --border-radius: 8px;
+    --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    --transition-speed: 0.3s;
+}
+
+/* Estilos base */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', 'Open Sans', sans-serif;
+}
+
+body {
+    background-color: var(--background-light);
+    color: var(--text-dark);
+    transition: background-color var(--transition-speed);
+}
+
+
+/* Estructura principal */
+.container {
+    display: flex;
+    min-height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+    width: var(--sidebar-width);
+    background-color: var(--text-dark);
+    color: var(--text-light);
+    padding: 20px 0;
+    transition: all var(--transition-speed);
+    position: fixed;
+    height: 100vh;
+    overflow-y: auto;
+    z-index: 1000;
+}
+
+
+.sidebar-logo {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0 20px 20px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    margin-bottom: 20px;
+}
+
+.sidebar-logo img {
+    height: 40px;
+    margin-right: 10px;
+}
+
+.sidebar-logo h2 {
+    font-size: 1.5rem;
+}
+
+.sidebar-menu {
+    list-style: none;
+}
+
+.sidebar-menu li {
+    margin-bottom: 5px;
+}
+
+.sidebar-menu a {
+    display: flex;
+    align-items: center;
+    padding: 12px 20px;
+    color: var(--text-light);
+    text-decoration: none;
+    transition: all var(--transition-speed);
+    border-left: 4px solid transparent;
+}
+
+.sidebar-menu a:hover,
+.sidebar-menu a.active {
+    background-color: rgba(255, 255, 255, 0.1);
+    border-left: 4px solid var(--primary-color);
+}
+
+.sidebar-menu i {
+    margin-right: 10px;
+    width: 20px;
+    text-align: center;
+}
+
+/* Contenido principal */
+.main-content {
+    flex: 1;
+    margin-left: var(--sidebar-width);
+    transition: margin-left var(--transition-speed);
+    padding: 20px;
+    display: flex; /* Permite que los elementos hijos usen flexbox */
+    flex-direction: column; /* Organiza los elementos hijos en columna */
+}
+
+/* Contenido de la sección - Hacer que ocupe todo el espacio disponible */
+.content-section {
+    flex-grow: 1; /* Permite que esta sección ocupe el espacio vertical restante */
+    display: none; /* Para centrar su contenido (welcome-message-container) */
+    flex-direction: column; /* Para organizar el contenido verticalmente */
+    justify-content: center; /* Centra verticalmente el contenido */
+    align-items: center; /* Centra horizontalmente el contenido */
+    width: 100%; /* Asegura que ocupe todo el ancho */
+}
+
+.content-section.active{
+    display: flex;
+}
+
+/* Header */
+.header { 
+    display: flex;
+    justify-content: flex-end; /* Alinea los elementos a la derecha después de eliminar el breadcrumb */
+    align-items: center;
+    padding: 10px 20px;
+    margin-bottom: 20px;
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+}
+
+
+
+.header-actions {
+    display: flex;
+    gap: 15px;
+}
+
+.header-btn {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: var(--text-dark);
+    transition: color var(--transition-speed);
+}
+
+
+
+.header-btn:hover {
+    color: var(--primary-color);
+}
+
+/* Estilos para el mensaje de bienvenida con paint-order */
+.welcome-message-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1; /* Permite que este contenedor use el espacio dentro de .content-section */
+    text-align: center; /* Asegura el centrado del texto */
+    padding: 20px;
+    max-width: 90%;
+    margin: 0 auto;
+}
+
+.paint-order {
+    paint-order: stroke fill;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-transform: uppercase;
+    font-size: calc(2rem + min(70px, 15vw)); /* Aumentado el tamaño de fuente */
+    font-weight: 900;
+    letter-spacing: -.15ch; 
+    line-height: 1; /* Ajusta la altura de línea para que no se superpongan */
+    color: white;
+    -webkit-text-stroke: 4px black; /* Aumentado el grosor del borde */
+    text-shadow: 8px 8px black; /* Aumentado el tamaño de la sombra */
+}
+
+.paint-order > span:first-of-type {
+    font-size: .65em; /* Un poco más pequeño para mantener jerarquía */
+}
+
+.paint-order > div {
+    display: flex;
+    gap: .5ch;
+    flex-wrap: wrap; /* Permite que las palabras se envuelvan en pantallas pequeñas */
+    justify-content: center; /* Centra el contenido dentro del div */
+}
+
+/* Configuración del video */
+.video-container {
+    position: relative;
+    width: 100%;
+    /*Altura basada en una relacion de aspecto 16:9 */
+    padding-bottom: 56.25%; /* 16:9 Aspect Ratio (9 / 16 * 100) */
+    height: 0;
+    margin-bottom: 20px;
+    border-radius: var(--border-radius);
+    overflow: hidden;
+    box-shadow: var(--box-shadow);
+    background-color: #000;
+    display: flex; /* Para centrar el loader */
+    justify-content: center;
+    align-items: center;
+}
+
+.video-wrapper {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    display: flex; /* Para organizar canvas y overlay */
+    justify-content: center;
+    align-items: center;
+}
+
+.video-wrapper #video-stream-img,
+.video-wrapper #analysis-video-stream-img { /* Aplicar a ambos img de video */
+    position: absolute; 
+    top: 0;
+    left: 0; 
+    width: 100%; 
+    height: 100%;
+    object-fit: contain;
+    z-index: 1; /* Asegurar que la imagen esté en la capa base */
+}
+
+canvas {
+    position: absolute; 
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: transparent; 
+    object-fit: contain;
+    z-index: 2; /* Asegurar que el canvas esté sobre la imagen */
+}
+
+/* Controles de Video flotantes */
+.video-controls {
+    display: flex;
+    justify-content: space-between; /* Espacio entre los grupos de controles */
+    align-items: center;
+    padding: 10px;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    border-bottom-left-radius: var(--border-radius);
+    border-bottom-right-radius: var(--border-radius);
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    transition: transform var(--transition-speed);
+    transform: translateY(100%); /* Oculto por defecto */
+    z-index: 5; /* Asegurar que los controles estén por encima de todo */
+}
+
+.video-container:hover .video-controls {
+    transform: translateY(0); /* Visible al hacer hover */
+}
+
+.video-controls-left,
+.video-controls-right {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+.video-btn {
+    background: none;
+    border: none;
+    color: white;
+    cursor: pointer;
+    font-size: 1.2rem;
+    transition: color var(--transition-speed);
+}
+
+.video-btn:hover {
+    color: var(--primary-color);
+}
+
+
+/* Paneles de estadísticas */
+.stats-panels {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+    margin-bottom: 20px;
+}
+
+.stats-panel {
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 20px;
+    transition: transform var(--transition-speed);
+}
+
+
+
+.stats-panel:hover {
+    transform: translateY(-5px);
+}
+
+.stats-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+
+
+.stats-panel-title {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.stats-panel-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: rgba(52, 152, 219, 0.1);
+    color: var(--primary-color);
+}
+
+.stats-panel-content {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.stats-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.stats-label {
+    color: #7f8c8d;
+}
+
+.stats-value {
+    font-weight: 500;
+}
+
+.stats-bar {
+    height: 5px;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 5px;
+    overflow: hidden;
+    margin-top: 5px;
+}
+
+
+
+.stats-bar-fill {
+    height: 100%;
+    background-color: var(--primary-color);
+    border-radius: 5px;
+}
+
+.stats-bar-fill.warning {
+    background-color: #f39c12;
+}
+
+.stats-bar-fill.danger {
+    background-color: var(--alert-color);
+}
+
+/* Gráficos y visualizaciones */
+.visualization-container {
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+
+
+.visualization-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+
+
+.visualization-title {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.visualization-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.visualization-btn {
+    background: none;
+    border: 1px solid var(--primary-color);
+    color: var(--primary-color);
+    padding: 5px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all var(--transition-speed);
+}
+
+.visualization-btn:hover {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+.visualization-content {
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.chart-container {
+    width: 100%;
+    height: 300px;
+}
+
+/* Diseño responsive */
+@media (max-width: 992px) {
+    .sidebar {
+        transform: translateX(-100%);
+    }
+
+    .sidebar.active {
+        transform: translateX(0);
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    .toggle-sidebar {
+        display: block; 
+    }
+}
+
+@media (max-width: 768px) {
+    .stats-panels {
+        grid-template-columns: 1fr;
+    }
+    .paint-order {
+        font-size: calc(1.5rem + min(40px, 10vw)); /* Un tamaño más pequeño para móviles */
+        -webkit-text-stroke: 2px black;
+        text-shadow: 4px 4px black;
+    }
+
+    .metrics-table-container table {
+        font-size: 0.9em; /* Reduce el tamaño de la fuente para que quepa mejor */
+    }
+
+    .metrics-table-container th,
+    .metrics-table-container td {
+        padding: 8px 10px; /* Reduce el padding en móviles */
+    }
+}
+
+/* Overlays y visualizaciones */
+.pose-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+    background-color: transparent; 
+    z-index: 3; /* Para que este por encima del canvas y la imagen */ 
+}
+
+.pose-detected {
+    border: 2px solid var(--secondary-color);
+    border-radius: 4px;
+    position: absolute;
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(46, 204, 113, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(46, 204, 113, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(46, 204, 113, 0);
+    }
+}
+
+/* Loaders y estados de carga */
+/* El loader principal en analysis-results-area tendrá un z-index más alto */
+.loader {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    width: 100%;
+    position: absolute; /* Se pone absolute para que ocupe todo el contenedor padre */
+    top: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    z-index: 1000; /* Asegurar que el loader esté siempre encima de la mayoría de elementos */
+    text-align: center;
+    flex-direction: column;
+    border-radius: var(--border-radius); /* Hereda el border-radius del padre */
+}
+
+
+.loader-content {
+    text-align: center;
+}
+
+.loader-content p{
+    margin-top: 15px;
+    font-size: 1.1em;
+    font-weight: 500;
+}
+
+.loader-spinner {
+    border: 5px solid rgba(255, 255, 255, 0.3);
+    border-radius: 50%;
+    border-top: 5px solid var(--primary-color);
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 15px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Tooltips y guías */
+.tooltip {
+    position: relative;
+    display: inline-block;
+}
+
+.tooltip .tooltip-text {
+    visibility: hidden;
+    width: 200px;
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    text-align: center;
+    border-radius: 6px;
+    padding: 5px;
+    position: absolute;
+    z-index: 1001; /* Asegurar que los tooltips estén encima del loader si está activo */
+    bottom: 125%;
+    left: 50%;
+    margin-left: -100px;
+    opacity: 0;
+    transition: opacity 0.3s;
+}
+
+.tooltip:hover .tooltip-text {
+    visibility: visible;
+    opacity: 1;
+}
+
+/* Estilos para los botones de menú de selección (Deteccion en Vivo y Analisis) */
+.selection-menu-container {
+    display: flex;
+    flex-wrap: wrap; /* Permite que los botones se envuelvan en varias líneas */
+    gap: 35px;
+    justify-content: center; /* Centra los botones en la fila */
+    padding: 30px;
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+
+    max-width: 900px;
+    width: 80%;
+    min-height: 180px;
+    align-items: center;
+    margin: 0 auto;
+}
+
+
+
+.menu-button {
+    background: #fff; /* Fondo blanco */
+    border: none;
+    padding: 10px 20px;
+    display: inline-block;
+    font-size: 15px;
+    font-weight: 600;
+    width: 140px; /* Ancho fijo */
+    text-transform: uppercase;
+    cursor: pointer;
+    transform: skew(-21deg); /* Efecto para "torcer" el estilo del boton */
+    position: relative; /* Necesario para los pseudoelementos */
+    z-index: 1; /* Para que el texto esté por encima del pseudoelemento de hover */
+    overflow: hidden; /* Importante para el efecto de::before */
+    
+    /* Aseguramos que el texto esté dentro de un span para no torcerlo */
+    text-align: left; /* Centramos el texto dentro del botón */
+    line-height: 1.5; /* Ajuste para el centrado vertical del texto si es necesario */
+}
+
+.menu-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    right: 100%; /* Inicia fuera del botón a la derecha */
+    left: 0;
+    background: rgb(0, 76, 255); /* Fondo rojo para el hover */
+    opacity: 0;
+    z-index: -1; /* Detrás del texto pero delante del fondo original */
+    transition: all 0.5s;
+}
+
+.menu-button:hover {
+    color: #fff; /* Color del texto blanco al hover */
+    background: #fff; /* Mantenemos el fondo blanco del botón, el ::before lo cubre */
+}
+
+.menu-button:hover::before {
+    left: 0;
+    right: 0;
+    opacity: 1;
+}
+
+.video-display-area {
+    display:none;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    width: 100%;
+    max-width: 900px;
+    background-color: white; /* Color de fondo cuando está visible */
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 20px;
+}
+
+
+
+/* Estilos para los datos de ejercicios en streaming */
+.exercise-data-display {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start; /* Alinea el texto a la izquierda */
+    justify-content: center;
+    padding: 0 15px; /* Espaciado a los lados */
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo oscuro semitransparente */
+    border-radius: 5px;
+    color: white;
+    font-size: 1.1em;
+    gap: 5px; /* Espacio entre los párrafos */
+    margin-left: 20px; /* Espacio a la izquierda de los controles */
+}
+
+.exercise-data-display p {
+    margin: 0;
+    white-space: nowrap; /* Evita que el texto se rompa en varias líneas */
+}
+
+.exercise-data-display span {
+    font-weight: bold;
+    color: var(--secondary-color); /* Color para resaltar los valores */
+}
+
+
+
+
+
+/* NEW: Estilos para la barra de progreso indefinida en análisis */
+.analysis-progress-container {
+    width: 80%; /* Ancho de la barra de progreso */
+    max-width: 600px; /* Ancho máximo para que no sea demasiado grande */
+    background-color: #e0e0e0; /* Color de fondo de la barra */
+    border-radius: 5px;
+    overflow: hidden; /* Para asegurar que la animación se quede dentro de los bordes */
+    height: 20px; /* Altura de la barra */
+    margin-top: 20px; /* Espacio con el contenido superior */
+    display: none; /* Oculta por defecto, se muestra con JS */
+    z-index: 10; /* Asegura que esté sobre otros elementos si se superponen */
+    position: relative; /* Para que el loader principal pueda posicionarse relativo a este */
+}
+
+
+
+.analysis-progress-bar {
+    height: 100%;
+    width: 100%; /* El ancho siempre será del 100% para la animación */
+    background: linear-gradient(90deg, var(--primary-color) 0%, var(--secondary-color) 100%); /* Degradado */
+    border-radius: 5px;
+    animation: indeterminate-progress 1.5s infinite linear; /* Animación indefinida */
+    transform-origin: 0% 50%; /* Punto de origen para la transformación */
+}
+
+@keyframes indeterminate-progress {
+    0% { transform: translateX(-100%) scaleX(0.1); } /* Empieza fuera y pequeño */
+    50% { transform: translateX(0%) scaleX(0.7); } /* Se estira y avanza */
+    100% { transform: translateX(100%) scaleX(0.1); } /* Se va y se encoge */
+}
+
+/* Estilos para el área de resultados de análisis */
+.analysis-results-area {
+    display: flex; /* Asegura que se muestre como flex cuando esté activo */
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start; /* Alinea los elementos al inicio verticalmente */
+    width: 100%;
+    max-width: 900px;
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 20px;
+    position: relative; /* Para que los loaders y la barra de progreso se posicionen correctamente */
+    min-height: 400px; /* Asegura un tamaño mínimo para el área de resultados */
+}
+
+
+
+/* Estilos para el loader dentro del área de análisis */
+.analysis-results-area .loader {
+    position: absolute; /* Ocupa todo el espacio del .analysis-results-area */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.7); /* Fondo semi-transparente para el loader */
+    z-index: 20; /* Asegura que esté por encima de la barra de progreso y otros contenidos */
+    border-radius: var(--border-radius);
+}
+
+
+/* Estilos para la tabla de métricas */
+.analysis-metrics-panel {
+    width: 100%;
+    max-width: 600px; /* Ancho máximo para la tabla */
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 20px;
+    margin-top: 20px; /* Espacio después de la barra de progreso */
+    flex-direction: column; /* Asegura que el título y la tabla se apilen */
+    align-items: center; /* Centra el contenido horizontalmente */
+}
+
+
+
+.analysis-metrics-panel h2 {
+    margin-bottom: 15px;
+    color: var(--primary-color);
+}
+
+.metrics-table-container {
+    width: 100%;
+    overflow-x: auto; /* Permite desplazamiento horizontal en pantallas pequeñas */
+}
+
+.metrics-table-container table {
+    width: 100%;
+    border-collapse: collapse; /* Elimina el espacio entre celdas */
+    margin: 0;
+    padding: 0;
+}
+
+.metrics-table-container th,
+.metrics-table-container td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+
+
+.metrics-table-container thead th {
+    background-color: var(--primary-color); /* Color diferente para la cabecera */
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+
+
+.metrics-table-container tbody tr:nth-child(even) {
+    background-color: #f2f2f2; /* Cebra para filas */
+}
+
+
+
+.metrics-table-container tbody tr:hover {
+    background-color: #ddd; /* Efecto hover en filas */
+}
+
+
+
+
+/* Estilos para el panel del Reporte de Clasificación (Nueva) */
+.classification-report-panel {
+    width: 100%;
+    max-width: 700px; /* Ancho similar a los gráficos */
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 20px;
+    margin-top: 20px;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+.classification-report-panel h2 {
+    margin-bottom: 15px;
+    color: var(--primary-color);
+}
+
+.classification-table-container {
+    width: 100%;
+    overflow-x: auto; /* Permite desplazamiento horizontal en pantallas pequeñas */
+}
+
+.classification-table-container table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 0;
+    padding: 0;
+}
+
+.classification-table-container th,
+.classification-table-container td {
+    padding: 10px 12px;
+    text-align: center; /* Centrar texto en celdas para este reporte */
+    border-bottom: 1px solid #ddd;
+}
+
+
+
+.classification-table-container thead th {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+
+
+.classification-table-container tbody tr:nth-child(even) {
+    background-color: #f2f2f2;
+}
+
+
+
+.classification-table-container tbody tr:hover {
+    background-color: #ddd;
+}
+
+
+
+
+/* Estilos para los gráficos (contenedores individuales) */
+.analysis-charts-container {
+    width: 100%;
+    max-width: 900px; /* Aumentado para acomodar más gráficos y espacio */
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 20px;
+    margin-top: 20px;
+    flex-direction: column;
+    align-items: center;
+}
+
+
+
+.analysis-charts-container h2 {
+    margin-bottom: 15px;
+    color: var(--primary-color);
+}
+
+.chart-section-wrapper {
+    width: 100%;
+    margin-bottom: 30px; /* Espacio entre cada gráfico */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: 1px solid #eee; /* Borde sutil para separar cada gráfico */
+    border-radius: var(--border-radius);
+    padding: 15px;
+    background-color: var(--background-light); /* Fondo para cada sección de gráfico */
+}
+
+
+
+.chart-section-wrapper h3 {
+    margin-bottom: 10px;
+    color: var(--text-dark);
+    font-size: 1.1em;
+}
+
+
+
+
+.chart-canvas-container {
+    position: relative;
+    width: 100%;
+    height: 350px; /* Altura fija para el contenedor del canvas */
+    margin-bottom: 15px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Ajuste específico para el mapa de calor para que sea más cuadrado y legible */
+#chart-confusion-matrix {
+    max-width: 350px; 
+    max-height: 350px;
+}
+
+
+.chart-canvas-container canvas {
+    max-width: 100%;
+    max-height: 100%;
+    background-color: transparent; /* Asegura que el canvas no tenga un fondo blanco */
+}
+
+.chart-controls {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.chart-btn {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color var(--transition-speed);
+}
+
+.chart-btn:hover {
+    background-color: #2980b9;
+}
+
+
+/* Estilos para mensajes de error en los gráficos */
+.chart-error-message {
+    color: var(--alert-color);
+    font-weight: bold;
+    text-align: center;
+    padding: 20px;
+}
+
+/* NUEVOS ESTILOS PARA LA GUÍA RÁPIDA EN LA SECCIÓN DE AYUDA */
+.help-guide-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centra el contenido horizontalmente */
+    text-align: center;
+    width: 100%;
+    max-width: 800px; /* Ancho máximo para que el contenido no se estire demasiado */
+    padding: 20px;
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    margin: 20px auto; /* Centra el contenedor en la página y añade margen */
+}
+
+
+
+.help-guide-container h2 {
+    color: var(--primary-color);
+    margin-bottom: 20px;
+    font-size: 1.8em;
+    text-transform: uppercase;
+}
+
+.help-guide-container p {
+    margin-top: 15px;
+    margin-bottom: 10px;
+    font-size: 1.1em;
+    line-height: 1.6;
+    color: var(--text-dark);
+    max-width: 90%; /* Limita el ancho del texto para mejor legibilidad */
+}
+
+
+
+.help-guide-image {
+    max-width: 100%; /* Asegura que la imagen sea responsiva */
+    height: auto;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    margin-top: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd; /* Borde suave para las imágenes */
+}
+
+
+
+/* Hero Section (Bienvenida con Carrusel de Imágenes) */
+.hero-section {
+    position: relative;
+    width: 100%;
+    height: 70vh; /* Aumenta ligeramente la altura para más impacto */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    text-align: center;
+    color: var(--text-light);
+    /* No hay background-color aquí, el carrusel será el fondo */
+}
+
+.hero-image-carousel {
+    position: absolute; /* Permite posicionamiento absoluto de las imágenes */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden; /* Oculta cualquier parte de la imagen que se salga del contenedor */
+    border-radius: var(--border-radius);
+}
+
+.hero-image-carousel .hero-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Cubre todo el área */
+    opacity: 0; /* Por defecto, todas ocultas */
+    transition: opacity 1.5s ease-in-out; /* Transición suave entre imágenes */
+}
+
+.hero-image-carousel .hero-image.active {
+    opacity: 1; /* La imagen activa es visible */
+}
+
+.hero-content {
+    position: relative;
+    z-index: 2; /* Encima de las imágenes */
+    background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente más oscuro para el texto */
+    padding: 40px 60px; /* Más padding para un look premium */
+    border-radius: var(--border-radius);
+    max-width: 900px;
+    box-shadow: var(--box-shadow); /* Sombra para el cuadro de texto */
+}
+
+.hero-content .elegant-title {
+    font-family: 'Montserrat', sans-serif; /* Fuente más elegante si la tienes cargada, si no, usa una sans-serif por defecto */
+    font-size: 3.8em; /* Tamaño más grande y audaz */
+    line-height: 1.1;
+    margin-bottom: 25px;
+    color: white;
+    text-transform: uppercase; /* Mayúsculas para un look más formal */
+    letter-spacing: 2px; /* Espaciado entre letras */
+    text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8); /* Sombra para mejor lectura */
+}
+
+.hero-content .discreet-text {
+    font-size: 1.2em;
+    margin-bottom: 40px; /* Más espacio al botón */
+    color: #e0e0e0; /* Un gris claro para el texto discreto */
+    max-width: 600px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.7;
+}
+
+.btn-primary {
+    display: inline-block;
+    background-color: var(--secondary-color); /* Color verde para el botón */
+    color: white;
+    padding: 15px 30px;
+    border-radius: 50px;
+    text-decoration: none;
+    font-weight: bold;
+    transition: background-color var(--transition-speed), transform var(--transition-speed);
+}
+
+.btn-primary:hover {
+    background-color: #27ae60; /* Tono más oscuro al pasar el ratón */
+    transform: translateY(-3px);
+}
+
+/* Features Section (Tarjetas de Información) */
+.features-section {
+    padding: 60px 20px;
+    text-align: center;
+    background-color: var(--background-light);
+}
+
+
+
+.features-section h2 {
+    font-size: 2.5em;
+    color: var(--primary-color);
+    margin-bottom: 40px;
+}
+
+
+
+.info-cards-container {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap; /* Permite que las tarjetas se envuelvan en pantallas pequeñas */
+    gap: 30px; /* Espacio entre las tarjetas */
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.info-card {
+    background-color: white;
+    border-radius: var(--border-radius);
+    box-shadow: var(--box-shadow);
+    padding: 30px;
+    flex: 1; /* Permite que las tarjetas crezcan y se encojan */
+    min-width: 280px; /* Ancho mínimo para cada tarjeta */
+    max-width: 350px; /* Ancho máximo para cada tarjeta */
+    text-align: center;
+    transition: transform var(--transition-speed), box-shadow var(--transition-speed);
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between; /* Distribuye el espacio entre los elementos */
+}
+
+
+
+.info-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.info-card i {
+    font-size: 3em;
+    color: var(--primary-color);
+    margin-bottom: 20px;
+}
+
+
+
+
+.info-card h3 {
+    font-size: 1.8em;
+    margin-bottom: 15px;
+    color: var(--text-dark);
+}
+
+
+
+.info-card p {
+    font-size: 1em;
+    line-height: 1.6;
+    color: var(--text-dark);
+    margin-bottom: 20px;
+    flex-grow: 1; /* Permite que el párrafo ocupe el espacio disponible */
+}
+
+
+
+.card-link {
+    display: inline-flex;
+    align-items: center;
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: bold;
+    transition: color var(--transition-speed);
+}
+
+.card-link:hover {
+    color: var(--secondary-color);
+}
+
+.card-link i {
+    font-size: 1em; /* Ajustar tamaño del ícono de flecha */
+    margin-left: 8px;
+    transition: margin-left var(--transition-speed);
+}
+
+.card-link:hover i {
+    margin-left: 12px; /* Mover la flecha al pasar el ratón */
+}
+
+/* Responsividad para pantallas más pequeñas */
+@media (max-width: 992px) {
+    .hero-content .elegant-title {
+        font-size: 3em;
+    }
+    .hero-content .discreet-text {
+        font-size: 1.1em;
+    }
+    .hero-content {
+        padding: 30px 40px;
+    }
+}
+
+@media (max-width: 768px) {
+    .hero-section {
+        height: 60vh; /* Ajusta la altura para pantallas más pequeñas */
+    }
+    .hero-content .elegant-title {
+        font-size: 2.5em;
+    }
+    .hero-content .discreet-text {
+        font-size: 1em;
+    }
+    .hero-content {
+        padding: 25px 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-section {
+        height: 50vh;
+    }
+    .hero-content .elegant-title {
+        font-size: 1.8em;
+    }
+    .hero-content .discreet-text {
+        font-size: 0.9em;
+    }
+    .hero-content {
+        padding: 20px 20px;
+    }
+    .btn-primary {
+        padding: 12px 20px;
+        font-size: 0.9em;
+    }
+}
+
+/* Asegurar que el breadcrumb no se superponga si se ajusta */
+/* Asegura que esté por encima de otros elementos */
+/* .breadcrumb {
+    z-index: 100; 
+} */

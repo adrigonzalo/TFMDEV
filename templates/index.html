@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sistema de Detección de Pose Humana</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    
+    <!-- Main CSS-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+
+    <!-- Pop-up CSS-->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style_popup.css') }}">
+    
+    <!-- Incluye Chart.js ANTES de tu script.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <!-- Plugin para el mapa de calor (Matrix Controller) para Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-chart-matrix@2.0.0/dist/chartjs-chart-matrix.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <aside class="sidebar">
+            <div class="sidebar-logo">
+                <i class="fas fa-camera"></i>
+                <h2>PoseDetect</h2>
+            </div>
+            
+            <!-- Sidebar menu -->
+            <ul class="sidebar-menu">
+                <li>
+                    <a href="#home-content" class="nav-link" data-content="home">
+                        <i class="fas fa-home"></i>
+                        <span>Inicio</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#live-detection-content" class="nav-link" data-content="live-detection">
+                        <i class="fas fa-video"></i>
+                        <span>Detección en Vivo</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#analysis-content" class="nav-link" data-content="analysis">
+                        <i class="fas fa-chart-line"></i>
+                        <span>Análisis</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="#help-content" class="nav-link" data-content="help">
+                        <i class="fas fa-question-circle"></i>
+                        <span>Ayuda</span>
+                    </a>
+                </li>
+            </ul>
+        </aside>
+        
+        <!-- Main -->
+        <main class="main-content">
+            <header class="header">
+                
+                <div class="header-actions">
+                    <!-- Botón de retroceso -->
+                    <button class="header-btn tooltip" id="back-button" style="display: none;">
+                        <i class="fas fa-arrow-left"></i>
+                        <span class="tooltip-text">Volver</span>
+                    </button>
+
+                    <button class="header-btn toggle-sidebar">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                </div>
+            </header>
+            
+            <div id="home-content" class="content-section">
+                <section class="hero-section">
+                    <div class="hero-image-carousel">
+                        <img src="{{ url_for('static', filename='../static/img/squat.jpg') }}" alt="Detección de pose en sentadilla" class="hero-image active">
+                        <img src="{{ url_for('static', filename='../static/img/push-up.jpg') }}" alt="Detección de pose en flexiones" class="hero-image">
+                        <img src="{{ url_for('static', filename='../static/img/deadlift.jpg') }}" alt="Detección de pose en peso muerto" class="hero-image">
+                        <img src="{{ url_for('static', filename='../static/img/shoulder_press.jpg') }}" alt="Detección de pose en press de hombro" class="hero-image">
+                    </div>
+                    <div class="hero-content">
+                        <h1 class="elegant-title">
+                            ANÁLISIS INTELIGENTE<br>DE POSTURA
+                        </h1>
+                        <p class="discreet-text">
+                            Optimiza cada movimiento. Nuestro sistema de visión artificial te guía en tiempo real para perfeccionar tu técnica y prevenir lesiones en tus ejercicios.
+                        </p>
+                        <a href="#live-detection-content" class="btn-primary nav-link" data-content="live-detection">Empieza a mejorar ahora</a>
+                    </div>
+                </section>
+
+                <!-- Info Cards -->
+                <section class="features-section">
+                    <h2>¿Cómo podemos ayudarte?</h2>
+                    <div class="info-cards-container">
+                        <div class="info-card">
+                            <i class="fas fa-video"></i>
+                            <h3>Detección en Vivo</h3>
+                            <p>Realiza tus ejercicios y obtén retroalimentación instantánea sobre tu postura y conteo de repeticiones.</p>
+                            <a href="#live-detection-content" class="card-link nav-link" data-content="live-detection">Explorar <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                        <div class="info-card">
+                            <i class="fas fa-chart-line"></i>
+                            <h3>Análisis Detallado</h3>
+                            <p>Graba tus sesiones y recibe un análisis exhaustivo de tu técnica para identificar áreas de mejora.</p>
+                            <a href="#analysis-content" class="card-link nav-link" data-content="analysis">Explorar <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                        <div class="info-card">
+                            <i class="fas fa-question-circle"></i>
+                            <h3>Ayuda y Guía</h3>
+                            <p>Accede a guías rápidas y recursos para sacar el máximo provecho de todas las funciones del sistema.</p>
+                            <a href="#help-content" class="card-link nav-link" data-content="help">Explorar <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                        <div class="info-card">
+                            <i class="fas fa-comment-dots"></i>
+                            <h3>Danos tu Feedback</h3>
+                            <p>Ayúdanos a mejorar la herramienta compartiendo tu experiencia y sugerencias.</p>
+                            <a href="{{ url_for('feedback_form') }}" class="card-link">Enviar Feedback <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </section>
+            </div>
+
+            <!-- Seccion de deteccion en vivo -->
+            <div id="live-detection-content" class="content-section">
+                <div class="selection-menu-container">
+                    <button class="menu-button" data-exercise-type="squats">Sentadillas</button>
+                    <button class="menu-button" data-exercise-type="pushups">Flexiones</button>
+                    <button class="menu-button" data-exercise-type="deadlift">Peso Muerto</button>
+                    <button class="menu-button" data-exercise-type="shoulder_press">Press Hombro</button>
+                </div>
+                <div class="video-display-area">
+                    <section class="video-container">
+                        <div class="video-wrapper">
+                            <img id="video-stream-img" src="" alt="Live Video Feed">
+                            <canvas id="live-video-canvas"></canvas>
+                            <div class="pose-overlay" id="live-pose-overlay"></div>
+                            
+                            <div class="loader" id="live-video-loader">
+                                <div class="loader-content">
+                                    <div class="loader-spinner"></div>
+                                    <p>Inicializando modelo de detección...</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="video-controls">
+                            <div class="video-controls-left">
+                                <button class="video-btn" id="live-start-detection">
+                                    <i class="fas fa-play"></i>
+                                </button>
+                                <span id="live-detection-status">Detenido</span>
+                                <button class="video-btn tooltip" id="live-stop-detection">
+                                    <i class="fas fa-stop"></i>
+                                    <span class="tooltip-text">Detener Detección</span>
+                                </button>
+                            </div>
+                            
+                            <div class="exercise-data-display">
+                                <p>Correctas: <span id="live-detection-reps">0</span></p>
+                                <p>Incorrectas: <span id="live-detection-incorrect-reps">0</span></p>
+                                <p>Stage: <span id="live-detection-stage">N/A</span></p>
+                            </div>
+                            
+                            <div class="video-controls-right">              
+                                <button class="video-btn tooltip">
+                                    <i class="fas fa-expand"></i>
+                                    <span class="tooltip-text">Pantalla completa</span>
+                                </button>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <!-- Seccion de analisis -->
+            <div id="analysis-content" class="content-section">
+                <div class="selection-menu-container">
+                    <button class="menu-button" data-analysis-type="squats">COMENZAR ANALISIS DE SENTADILLA</button>
+                    <button class="menu-button" data-analysis-type="pushups">COMENZAR ANALISIS DE FLEXIONES</button>
+                    <button class="menu-button" data-analysis-type="deadlift">COMENZAR ANALISIS DE PESO MUERTO</button>
+                    <button class="menu-button" data-analysis-type="shoulder_press">COMENZAR ANALISIS DE PRESS DE HOMBRO</button>
+                </div>
+                
+                <div class="analysis-results-area" id="analysis-results-area" style="display: none;">
+                    <!-- El loader se muestra aquí durante el proceso de análisis -->
+                    <div class="loader" id="analysis-loader">
+                        <div class="loader-content">
+                            <div class="loader-spinner"></div>
+                            <p>Entrenando y evaluando modelo...</p>
+                        </div>
+                    </div>
+                    
+                    <!-- Contenedor para la barra de progreso indeterminada -->
+                    <div class="analysis-progress-container" id="analysis-progress-container">
+                        <div class="analysis-progress-bar"></div>
+                    </div>
+
+                    <!-- Sección para mostrar la tabla de métricas generales del modelo -->
+                    <section class="analysis-metrics-panel" id="analysis-metrics-panel" style="display: none;">
+                        <h2>Métricas del Modelo</h2>
+                        <div class="metrics-table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Métrica</th>
+                                        <th>Valor</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="metrics-table-body">
+                                    
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Sección para el Reporte de Clasificación (Nueva Tabla) -->
+                    <section class="classification-report-panel" id="classification-report-panel" style="display: none;">
+                        <h2>Reporte de Clasificación</h2>
+                        <div class="classification-table-container">
+                            <table id="classification-report-table">
+                                <thead>
+                                    <tr>
+                                        <th>Clase</th>
+                                        <th>Precision</th>
+                                        <th>Recall</th>
+                                        <th>F1-Score</th>
+                                        <th>Soporte</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="classification-report-table-body">
+    
+                                </tbody>
+                            </table>
+                        </div>
+                    </section>
+
+                    <!-- Secciones para gráficos -->
+                    <section class="analysis-charts-container" id="analysis-charts-container" style="display: none;">
+                        <div class="chart-section-wrapper">
+                            <h3>Rendimiento de Repeticiones</h3>
+                            <div class="chart-canvas-container">
+                                <canvas id="chart-reps"></canvas>
+                            </div>
+                            <div class="chart-controls">
+                                <button class="chart-btn tooltip" data-chart-id="chart-reps">
+                                    <i class="fas fa-download"></i>
+                                    <span class="tooltip-text">Descargar Gráfico</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="chart-section-wrapper">
+                            <h3>Matriz de Confusión</h3>
+                            <div class="chart-canvas-container">
+                                <canvas id="chart-confusion-matrix"></canvas>
+                            </div>
+                            <div class="chart-controls">
+                                <button class="chart-btn tooltip" data-chart-id="chart-confusion-matrix">
+                                    <i class="fas fa-download"></i>
+                                    <span class="tooltip-text">Descargar Gráfico</span>
+                                </button>
+                            </div>
+                        </div>
+
+                        <div class="chart-section-wrapper">
+                            <h3>Curva ROC</h3>
+                            <div class="chart-canvas-container">
+                                <canvas id="chart-roc"></canvas>
+                            </div>
+                            <div class="chart-controls">
+                                <button class="chart-btn tooltip" data-chart-id="chart-roc">
+                                    <i class="fas fa-download"></i>
+                                    <span class="tooltip-text">Descargar Gráfico</span>
+                                </button>
+                            </div>
+                        </div>
+                        
+                        <div class="chart-section-wrapper">
+                            <h3>Curva Precision-Recall</h3>
+                            <div class="chart-canvas-container">
+                                <canvas id="chart-pr"></canvas>
+                            </div>
+                            <div class="chart-controls">
+                                <button class="chart-btn tooltip" data-chart-id="chart-pr">
+                                    <i class="fas fa-download"></i>
+                                    <span class="tooltip-text">Descargar Gráfico</span>
+                                </button>
+                            </div>
+                        </div>
+
+                    </section>
+                </div>
+                <!-- FIN DE LA SECCIÓN DE ANÁLISIS -->
+
+            </div>
+
+            <!-- Seccion de ayuda -->
+            <div id="help-content" class="content-section">
+                <div class="help-guide-container">
+                    <h2>Guía Rápida de Uso</h2>
+                    <p>Bienvenido al Sistema de Detección de Pose Humana. Aquí te explicamos cómo utilizar la aplicación paso a paso:</p>
+                    
+                    <p>1. Inicia la aplicación y verás la pantalla de inicio con información general. Haz clic en "Empieza a mejorar ahora" o selecciona "Detección en Vivo" en el menú lateral para empezar.</p>
+                    <img src="{{ url_for('static', filename='../static/img/img32.jpg') }}" alt="Captura de pantalla de la sección de Inicio" class="help-guide-image">
+                    <img src="{{ url_for('static', filename='../static/img/img33.jpg') }}" alt="Captura de pantalla del botón Empieza a mejorar ahora" class="help-guide-image">
+
+                    <p>2. Una vez en la pestaña de "Detección en Vivo", selecciona el ejercicio que deseas realizar. Esto inicializará la cámara y el modelo de detección.</p>
+                    <img src="{{ url_for('static', filename='../static/img/img34.jpg') }}" alt="Captura de pantalla de selección de ejercicio en Detección en Vivo" class="help-guide-image">
+                    
+                    <p>3. Verás tu feed de video con la detección de pose en tiempo real. Puedes pausar o reanudar la detección usando el botón de Play/Pausa.</p>
+                    <img src="{{ url_for('static', filename='../static/img/img35.jpg') }}" alt="Captura de pantalla del botón Play/Pausa en Detección en Vivo" class="help-guide-image">
+
+                    <p>4. Para detener completamente la detección en vivo y liberar la cámara, haz clic en el botón de "Detener Detección" (cuadrado). Esto te devolverá al menú de selección de ejercicio.</p>
+                    <img src="{{ url_for('static', filename='../static/img/img36.jpg') }}" alt="Captura de pantalla del botón detener y menú lateral" class="help-guide-image">
+                    
+                    <p>5. Para acceder al análisis de tus grabaciones, navega a la pestaña de "Análisis" desde el menú lateral.</p>
+                    
+                    <p>6. Una vez dentro de esta pestaña, al igual que con la pestaña de Detección en Vivo, seleccionar el botón correspondiente al ejercicio grabado. Por ejemplo, si se ha grabado el ejercicio de Press de Hombro, en Análisis se seleccionará el botón de Comenzar Análisis de Press de Hombro.</p>
+                    <img src="{{ url_for('static', filename='../static/img/img37.jpg') }}" alt="Captura de pantalla de selección de análisis de ejercicio" class="help-guide-image">
+                    
+                    <p>7. Después de hacer clic, esperar unos minutos para que se realice la evaluación y se muestren los resultados.</p>
+                    <img src="{{ url_for('static', filename='../static/img/img38.jpg') }}" alt="Captura de pantalla de resultados de análisis" class="help-guide-image">
+                    <img src="{{ url_for('static', filename='../static/img/img39.jpg') }}" alt="Captura de pantalla de resultados de análisis" class="help-guide-image">
+                </div>
+            </div>
+            
+            <section class="stats-panels" style="display: none;">
+                </section>
+            
+            <section class="visualization-container" style="display: none;">
+                </section>
+
+        </main>
+    </div>
+    
+    <!-- Patrón animado que actúa como overlay -->
+    <div class="pattern-container" id="language-overlay"></div>
+
+    <!-- Pop-up de Bienvenida -->
+    <div id="language-popup" class="language-popup">
+        <h2 class="popup-title">BIENVENIDO A LA HERRAMIENTA PARA LA DETECCIÓN DE SU POSTURA</h2>
+        <p class="popup-text">¡EMPIEZA TU ENTRENAMIENTO!</p>
+        <button class="close-popup-button" id="close-welcome-popup">EMPEZAR</button>
+    </div>
+    
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='language_popup.js') }}"></script>
+</body>
+</html>
