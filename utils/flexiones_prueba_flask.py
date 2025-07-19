@@ -119,8 +119,6 @@ class PushupDetector:
         image.flags.writeable = True 
         image = cv2.cvtColor(image, cv2.COLOR_RGB2BGR)
 
-        self.current_export_label = 'neutral' # Valor predeterminado si no se detecta pose o etapa
-
         left_hip_angle, right_hip_angle, left_knee_angle, right_knee_angle, left_elbow_angle, right_elbow_angle = [-1]*6 # Default values
 
         try:
@@ -172,6 +170,9 @@ class PushupDetector:
                     self.current_export_label = 'down'
                     self.hip_angle_at_down_stage = avg_hip_angle # Guardar el ángulo de la cadera al llegar a 'down'
 
+                else:
+                    self.current_export_label = "up"
+
             elif self.stage == "down":
 
                 # Si estamos en 'down' y el codo sube, evaluamos la repetición
@@ -192,6 +193,9 @@ class PushupDetector:
                     self.stage = "up" # Reseteamos el estado a 'up' para la siguiente repetición
                     self.hip_angle_at_down_stage = None # Limpiar el ángulo de la cadera almacenado
             
+                else:
+                    self.current_export_label = "down"
+
             # Exportar el estado del frame actual al CSV
             self._export_landmark(results, self.current_export_label)
 
@@ -225,8 +229,9 @@ class PushupDetector:
                                      mp_drawing.DrawingSpec(color=(245, 66, 230), thickness=2, circle_radius=2))
 
         except Exception as e:
-            # print(f"Error procesando frame: {e}") # Para depuracion si quieres ver errores especificos
-            pass # No se dibuja nada si no hay landmarks, el frame original BGR permanece o se devuelve como esta.
+            # print(f"Error procesando frame: {e}") 
+            self.current_export_label = 'no_pose_detected' # O similar
+            pass
 
 
         # Retorna el fotograma procesado y los datos del ejercicio para ser enviados por Flask
